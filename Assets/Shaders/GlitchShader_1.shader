@@ -35,7 +35,7 @@ Shader "Glitch/Glitch1" {
 			v2f vert (appdata_full v) 
 			{
 			    v2f o;
-			    o.pos = mul (UNITY_MATRIX_MVP, v.vertex) + (_DisplVector - .5);
+			    o.pos = mul (UNITY_MATRIX_MVP, v.vertex) + _DisplVector;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
 				return o;
 			}
