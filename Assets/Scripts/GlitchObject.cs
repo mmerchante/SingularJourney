@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class GlitchObject : MonoBehaviour {
 
+    public float ampThreshold = .1f;
     public float amplitudeMultiplier = .1f;
     public AnimationCurve amplitudeCurve;
 
@@ -25,6 +26,11 @@ public class GlitchObject : MonoBehaviour {
         float t = Mathf.Repeat(Time.time, 1f);
 
         float maxAmplitude = amplitudeCurve.Evaluate(t) * amplitudeMultiplier;
+
+        if (Random.value * maxAmplitude > ampThreshold && this.rigidbody)
+        {
+            this.rigidbody.velocity += Random.onUnitSphere * Random.value;
+        }
 
         foreach (Material m in glitchMaterials)
         {
