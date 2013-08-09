@@ -3,92 +3,57 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MovementController : MonoBehaviour {
-    public enum AnimationType {
-        Linear,
-        Smooth
-    }
 
-    public Vector3 infinity;
 
-    private Queue<Vector3> targets;
-    private Queue<Vector3> lookats;
-    private Queue<float> times;
+    private Queue<Movement> moves;
 
-    private Vector3 startPosition;
-    private Vector3 startLookat;
+    private Movement last;
     private float currentTime;
-    private AnimationType animationType;
 
     void Awake() {
-        infinity = transform.forward * 5000f;
-        targets = new Queue<Vector3>();
-        lookats = new Queue<Vector3>();
-        times = new Queue<float>();
-        startPosition = transform.position;
-        startLookat = infinity;
+        moves = new Queue<Movement>();
+        last = new Movement(transform.position, transform.rotation, 0f);
         currentTime = 0f;
-        animationType = AnimationType.Smooth;
-    }
-
-    internal void SetAnimationType(AnimationType type) {
-        animationType = type;
     }
 
     void Update() {
-        if (targets.Count != 0) {
-            Vector3 target = targets.Peek();
-            float time = times.Peek();
-            Vector3 lookat = lookats.Peek();
+        if (moves.Count != 0) {
+            Movement move = moves.Peek();
             currentTime += Time.deltaTime;
-            float t = currentTime / time;
-            switch (animationType) {
-                case AnimationType.Linear:
-                    t = Linear(t);
-                    break;
-                case AnimationType.Smooth:
-                    t = Smooth(t);
-                    break;
-            }
-            if (currentTime > time) {
-                currentTime = time;
+            float t = currentTime / move.time;
+            t = move.ApplyTransform(t);
+
+            if (currentTime > move.time) {
+                currentTime = move.time;
                 t = 1;
             }
-            transform.position = Vector3.Lerp(startPosition, target, t);
-            if (!lookat.Equals(Vector3.zero)) {
-                Vector3 inter = Vector3.Lerp(startLookat, lookat, t);
-                transform.LookAt(inter);
+            if (!move.position.Equals(Vector3.zero)) {
+                transform.position = Vector3.Lerp(last.position, move.position, t);
             }
-            if (currentTime.Equals(time)) {
-                times.Dequeue();
-                
-                startPosition = targets.Dequeue();
-                Vector3 last = lookats.Dequeue();
-                startLookat = last==Vector3.zero?startLookat:last;
+            if (!move.rotation.Equals(Quaternion.identity)) {
+                transform.rotation = Quaternion.Lerp(last.rotation, move.rotation, t);
+            }
+            if (currentTime.Equals(move.time)) {
+                moves.Dequeue();
+                last.position = move.position;
+                last.rotation = move.rotation;
                 currentTime = 0f;
             }
         }
     }
 
+    internal void Rotate(Quaternion rot, float seconds) {
+        MoveTo(Vector3.zero, rot, seconds);
+    }
 
     internal void MoveTo(Vector3 pos, float seconds) {
-        MoveTo(pos, Vector3.zero, seconds);
+        MoveTo(pos, Quaternion.identity, seconds);
     }
-    internal void MoveTo(Vector3 pos, Vector3 lookat, float seconds) {
-        targets.Enqueue(pos);
-        times.Enqueue(seconds);
-        lookats.Enqueue(lookat);
-    }
-
-
-    private float Linear(float x) {
-        return x;
-    }
-
-    private float Smooth(float x) {
-        return (float) (1 - Mathf.Cos(x * Mathf.PI)) / 2;
+    internal void MoveTo(Vector3 pos, Quaternion rot, float seconds) {
+        moves.Enqueue(new Movement(pos, rot, seconds));
     }
 
     internal bool IsMoving() {
-        return targets.Count > 0;
+        return moves.Count > 0;
     }
 }
