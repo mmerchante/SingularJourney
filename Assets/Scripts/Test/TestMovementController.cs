@@ -7,10 +7,10 @@ public class TestMovementController : MonoBehaviour {
     public bool right;
     MovementController moves;
 
-	void Start () {
+    void Start () {
         moves = GetComponent<MovementController>();
         moves.MoveTo(transform.position + Vector3.up * 5, 2);
         moves.Rotate(Quaternion.Euler(0, 180*(right?-1:1), 0), duration);
-	}
-	
+    }
+    
 }
