@@ -19,10 +19,9 @@ public class PickupController : MonoBehaviour {
                     if (hit.collider.gameObject) {
                         heldObject = hit.collider.gameObject;
                         heldObject.transform.parent = gameObject.transform;
-                        Debug.Log(heldObject.name);
                         heldObject.GetComponent<Rigidbody>().isKinematic = true;
 
-                        Vector3 handLocation = new Vector3(0, pickupDistance, 0);
+                        Vector3 handLocation = new Vector3(0.6081293f, 0.4828247f, 2.454569f);
                         heldObject.transform.localPosition = handLocation;
                         itemHeld = true;
                     }
