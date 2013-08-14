@@ -16,13 +16,16 @@ public class PuzzleController : MonoBehaviour {
     }
 
     /* instance members */
-
+    public string[] puzzles;
+    private int currentPuzzle;
     private List<PuzzleListener> listeners;
 
     void Start() {
         listeners = new List<PuzzleListener>();
+        currentPuzzle = 0;
+        LoadNextPuzzle();
     }
-    
+
     /**
      * Register to be aware of puzzle solving events
      **/
@@ -37,9 +40,13 @@ public class PuzzleController : MonoBehaviour {
         foreach (PuzzleListener listener in listeners) {
             listener.OnPuzzleSolved(name);
         }
+        currentPuzzle += 1;
+        LoadNextPuzzle();
     }
 
-
+    private void LoadNextPuzzle() {
+        Application.LoadLevelAdditive(puzzles[currentPuzzle]);
+    }
 
 
 
