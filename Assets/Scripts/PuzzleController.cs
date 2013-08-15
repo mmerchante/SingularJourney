@@ -8,7 +8,7 @@ public class PuzzleController : MonoBehaviour {
     /* class members */
     private static PuzzleController instance;
 
-    private static PuzzleController Get() {
+    public static PuzzleController Get() {
         if (instance == null) {
             instance = FindObjectOfType(typeof(PuzzleController)) as PuzzleController;
         }

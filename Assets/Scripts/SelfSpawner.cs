@@ -24,7 +24,9 @@ public class SelfSpawner : MonoBehaviour {
             passed += Time.deltaTime;
             if (passed > interval) {
                 passed -= interval;
-                DoSpawn();
+                if (maxClones > 0) {
+                    DoSpawn();
+                }
             }
         } else {
             if (fading) {
