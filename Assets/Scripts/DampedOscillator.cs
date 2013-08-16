@@ -9,13 +9,12 @@ public class DampedOscillator : MonoBehaviour {
 
     private Vector3 target;
 
-    void Awake() {
+
+    void Update() {
         if (targetObject) {
             target = targetObject.transform.position;
         }
-    }
 
-    void Update() {
         // http://hyperphysics.phy-astr.gsu.edu/hbase/oscda2.html#c1
         Vector3 bounceForce = kFactor * (target - transform.position);
         rigidbody.AddForce(bounceForce);

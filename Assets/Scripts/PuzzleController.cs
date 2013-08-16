@@ -66,7 +66,9 @@ public class PuzzleController : MonoBehaviour {
         foreach (GameObject go in all) {
             Marker marker = go.GetComponent<Marker>();
             if (marker == null) {
-                go.transform.position += spawner.transform.position;
+                if (go.transform.parent == null) {
+                    go.transform.position += spawner.transform.position;
+                }
                 go.AddComponent<Marker>();
                 n += 1;
             }

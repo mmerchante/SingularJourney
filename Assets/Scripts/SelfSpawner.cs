@@ -7,6 +7,7 @@ public class SelfSpawner : MonoBehaviour {
     public int maxClones = 5;
     public bool original = true;
     public GameObject prefab;
+    public GameObject holder;
 
     private float passed = 0;
     private Queue<SelfSpawner> clones;
@@ -14,7 +15,8 @@ public class SelfSpawner : MonoBehaviour {
 
     void Start() {
         clones = new Queue<SelfSpawner>(maxClones);
-        if (!original) {
+        if (original) {
+        } else {
             gameObject.layer = 0; //back to default layer, non pickable
         }
     }
@@ -40,6 +42,7 @@ public class SelfSpawner : MonoBehaviour {
 
     void DoSpawn() {
         SelfSpawner copy = (GameObject.Instantiate(prefab) as GameObject).GetComponent<SelfSpawner>();
+        copy.gameObject.AddComponent<Marker>(); // prevent it from moving on level change
         copy.original = false;
         copy.transform.position = transform.position;
         copy.transform.rotation = transform.rotation;
