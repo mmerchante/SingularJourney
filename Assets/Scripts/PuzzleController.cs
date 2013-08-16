@@ -19,10 +19,12 @@ public class PuzzleController : MonoBehaviour {
     public string[] puzzles;
     private int currentPuzzle;
     private List<PuzzleListener> listeners;
+    private AsyncOperation async;
 
     void Start() {
         listeners = new List<PuzzleListener>();
-        currentPuzzle = 0;
+        OnLevelLoaded(0);
+        currentPuzzle = 1;
         LoadNextPuzzle();
     }
 
@@ -45,9 +47,32 @@ public class PuzzleController : MonoBehaviour {
     }
 
     private void LoadNextPuzzle() {
-        Application.LoadLevelAdditive(puzzles[currentPuzzle]);
+        async = Application.LoadLevelAdditiveAsync(puzzles[currentPuzzle]);
     }
 
+    void Update() {
+        if (async != null && async.isDone) {
+            async = null;
+            OnLevelLoaded(currentPuzzle);
+        }
+    }
+
+    private void OnLevelLoaded(int level) {
+        Debug.Log("Level " + level + " loaded!");
+        GameObject spawner = GameObject.Find("Puzzle" + level + "Location");
+        GameObject[] all = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
+
+        int n = 0;
+        foreach (GameObject go in all) {
+            Marker marker = go.GetComponent<Marker>();
+            if (marker == null) {
+                go.transform.position += spawner.transform.position;
+                go.AddComponent<Marker>();
+                n += 1;
+            }
+        }
+        Debug.Log(n + " objects moved");
+    }
 
 
 }
