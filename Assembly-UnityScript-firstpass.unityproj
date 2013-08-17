@@ -55,6 +55,7 @@
      <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection.shader" />
      <None Include="Assets\OVR\Shaders\OVRGUIShader.shader" />
      <None Include="Assets\Shaders\GlitchShader_1.shader" />
+     <None Include="Assets\Shaders\SimpleColorShader.shader" />
      <None Include="Assets\Shaders\GlitchTorchShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

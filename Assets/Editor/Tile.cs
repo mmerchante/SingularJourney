@@ -11,8 +11,8 @@ public class Tile : MonoBehaviour
     private static float SNAP_THRESHOLD_FORCE = .5f;
 
     private static Vector3[] aabb = { new Vector3 (1f, 1f, 1f), new Vector3 (1f, -1f, -1f), new Vector3 (1f, 1f, -1f), new Vector3 (1f, -1f, 1f),
-		new Vector3 (-1f, 1f, 1f), new Vector3 (-1f, -1f, -1f), new Vector3 (-1f, 1f, -1f), new Vector3 (-1f, -1f, 1f),		
-	};
+        new Vector3 (-1f, 1f, 1f), new Vector3 (-1f, -1f, -1f), new Vector3 (-1f, 1f, -1f), new Vector3 (-1f, -1f, 1f),		
+    };
 
     public Bounds bounds;
     public bool snap = false;
