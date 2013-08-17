@@ -4,7 +4,7 @@ Shader "WireShader" {
 		_CoilMask ("Coil Mask", 2D) = "grey" {}
 		_BaseBRDF ("Base NdotL NdotH", 2D) = "white" {}
 		_CoilBRDF ("Coil NdotL NdotH", 2D) = "white" {}
-		_PowerMask ("Power Mask", Range (0.0, 1.0)) = .75
+		_PowerMask ("Power Mask", Range (0.05, .95)) = .75
 	}	
 
 	SubShader { 
@@ -45,14 +45,15 @@ Shader "WireShader" {
 
 		struct Input {
 			float2 uv_CoilMask;
+			float2 uv_BaseBRDF;
 		};
 
 		void surf (Input IN, inout SurfaceOutput o) {
 			fixed4 tex = tex2D(_CoilMask, IN.uv_CoilMask);
 
-			fixed mask = smoothstep(_PowerMask * .75, _PowerMask * 1.25, IN.uv_CoilMask.y);
+			fixed mask = smoothstep(_PowerMask * .75, _PowerMask * 1.25, IN.uv_BaseBRDF.y);
 
-			mask = lerp(tex.r * mask, mask * (1.0 + cos(_Time.a * 2.0) * .25), mask);
+		//	mask = lerp(tex.r * mask, mask * (1.0 + cos(_Time.a * .5) * .25), mask);
 
 			o.Albedo = mask;
 			o.Specular = tex.rgb;
