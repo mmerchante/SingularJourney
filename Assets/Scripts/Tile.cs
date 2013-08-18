@@ -8,7 +8,6 @@ public class Tile : MonoBehaviour
 #if UNITY_EDITOR
 
     private static float SNAP_THRESHOLD_DISTANCE = 1f;
-    private static float SNAP_THRESHOLD_FORCE = .5f;
 
     private static Vector3[] aabb = { new Vector3 (1f, 1f, 1f), new Vector3 (1f, -1f, -1f), new Vector3 (1f, 1f, -1f), new Vector3 (1f, -1f, 1f),
         new Vector3 (-1f, 1f, 1f), new Vector3 (-1f, -1f, -1f), new Vector3 (-1f, 1f, -1f), new Vector3 (-1f, -1f, 1f),		
@@ -21,8 +20,6 @@ public class Tile : MonoBehaviour
     public bool closest = false;
 
     private static Tile[] tiles = null;
-
-    private Vector3 previousPosition = Vector3.zero;
 
     private Vector3 outwards;
 
@@ -55,7 +52,7 @@ public class Tile : MonoBehaviour
     public void ReloadTiles()
     {
         tiles = GameObject.FindObjectsOfType(typeof(Tile)) as Tile[];
-        Debug.Log("Reloading...");
+      //  Debug.Log("Reloading...");
     }
 
     public void Update()
@@ -115,8 +112,6 @@ public class Tile : MonoBehaviour
                     }
                 }
             }
-
-            previousPosition = this.transform.position;
         }
     }
 
@@ -156,7 +151,7 @@ public class Tile : MonoBehaviour
             Vector3 projected = new Vector3(Mathf.Abs(Vector3.Dot(tmp, t.right)),
                                              Mathf.Abs(Vector3.Dot(tmp, t.up)),
                                              Mathf.Abs(Vector3.Dot(tmp, t.forward)));
-            size = Vector3.Max(size, projected);
+            size = Vector3.Max(size, Vector3.Scale(projected, t.lossyScale));
         }
 
         return new Bounds(bounds.center, size);
