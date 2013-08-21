@@ -8,18 +8,25 @@ public class EntangledObject : MonoBehaviour {
     private Vector3 start;
     private Vector3 miniStart;
     private float scaleFactor;
+    private bool started = false;
 
-    void Awake() {
-        start = transform.position;
-        miniStart = miniature.transform.position;
-        scaleFactor = transform.localScale.x / miniature.transform.localScale.x;
+    void Start() {
+        enabled = false;
     }
 
     void Update() {
-        Vector3 current = miniature.transform.position;
-        Vector3 delta = current - miniStart;
-        transform.position = start + delta * scaleFactor;
-        transform.rotation = miniature.transform.rotation;
+        if (!started) {
+            start = transform.position;
+            miniStart = miniature.transform.position;
+            scaleFactor = transform.localScale.x / miniature.transform.localScale.x;
+            started = true;
+        } else {
+            Vector3 current = miniature.transform.position;
+            Vector3 delta = current - miniStart;
+            transform.position = start + delta * scaleFactor;
+            transform.rotation = miniature.transform.rotation;
+        }
+        
     }
 
 }
