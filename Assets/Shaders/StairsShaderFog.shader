@@ -70,7 +70,6 @@ Shader "vrjam/Stairs (Fog)" {
 			half4 tex = tex2D(_MainTex, IN.uv_MainTex) * length(noise);
 			o.Albedo = tex.rgb;// + IN.fog;
 			o.Specular = IN.fog;
-			//o.Emission = unity_FogColor * .1;
 			o.Normal = bump;
 		}
 		ENDCG
