@@ -63,14 +63,15 @@ public class PuzzleController : MonoBehaviour {
         GameObject[] all = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
 
         int n = 0;
-        foreach (GameObject go in all) {
-            Marker marker = go.GetComponent<Marker>();
-            if (marker == null) {
-                if (go.transform.parent == null) {
+        foreach (GameObject go in all) 
+            if(go.transform.parent == null)
+            {
+                Marker marker = go.GetComponent<Marker>();
+
+                if (marker == null) {
                     go.transform.position += spawner.transform.position;
-                }
-                go.AddComponent<Marker>();
-                n += 1;
+                    go.AddComponent<Marker>();
+                    n += 1;
             }
         }
         Debug.Log(n + " objects moved");

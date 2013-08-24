@@ -4,7 +4,7 @@ using System.Collections;
 public class SandboxItem : MonoBehaviour {
 
     void Awake() {
-        if (Application.loadedLevelName == "MainScene") {
+        if (Application.loadedLevelName == "MainSceneDeco") {
             enabled = false;
             Destroy(gameObject);
         }

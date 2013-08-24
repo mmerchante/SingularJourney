@@ -52,6 +52,7 @@
      <None Include="Assets\Shaders\WireShader.shader" />
      <None Include="Assets\Shaders\ScreenTexture.shader" />
      <None Include="Assets\Shaders\CrystalShader.shader" />
+     <None Include="Assets\Shaders\SelectableShader.shader" />
      <None Include="Assets\Shaders\WindShader.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
      <None Include="Assets\Shaders\WindOverlayShader.shader" />

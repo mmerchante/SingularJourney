@@ -162,7 +162,7 @@ public class OVRPlayerController : OVRComponent
 		{
 			bumpUpOffset = Mathf.Max(Controller.stepOffset, 
 									 new Vector3(moveDirection.x, 0, moveDirection.z).magnitude); 
-			moveDirection -= bumpUpOffset * Vector3.up;
+		//	moveDirection -= bumpUpOffset * Vector3.up;
 		}			
 	 
 		Vector3 predictedXZ = Vector3.Scale((Controller.transform.localPosition + moveDirection), 
@@ -202,6 +202,10 @@ public class OVRPlayerController : OVRComponent
 		// * * * * * * * * * * *
 		// Keyboard input
 			
+
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+            Jump();
+
 		// Move
 			
 		// WASD
@@ -220,8 +224,8 @@ public class OVRPlayerController : OVRComponent
 			MoveScale = 0.70710678f;
 			
 		// No positional movement if we are in the air
-		if (!Controller.isGrounded)	
-			MoveScale = 0.0f;
+//		if (!Controller.isGrounded)	
+//			MoveScale = 0.0f;
 			
 		MoveScale *= DeltaTime;
 			
