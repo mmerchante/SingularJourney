@@ -62,8 +62,8 @@ Shader "vrjam/Stairs (Fog)" {
 		float _Scale;
 
 		void surf (Input IN, inout SurfaceOutput o) {
-			half4 noise = tex2D (_NoiseTex, (IN.worldPos.xz + IN.worldPos.y) * _Scale + _Time.x * .025);
-			noise = tex2D(_BumpTex, noise.xy + _Time.x * .025);
+			half4 noise = tex2D (_NoiseTex, (IN.worldPos.xz + IN.worldPos.y) * _Scale);
+			noise = tex2D(_BumpTex, noise.xy + _Time.x * 1.5);
 
 			half3 bump = normalize(noise);
 
