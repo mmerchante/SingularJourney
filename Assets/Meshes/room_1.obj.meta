@@ -437,7 +437,7 @@ ModelImporter:
     4300170: puzzle_1_pPlane3
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
