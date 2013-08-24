@@ -4,6 +4,7 @@ using System.Collections;
 public class EntangledObject : MonoBehaviour {
 
     public GameObject miniature;
+    public float factorCorrection = 1.0f;
 
     private Vector3 start;
     private Vector3 miniStart;
@@ -18,7 +19,7 @@ public class EntangledObject : MonoBehaviour {
         if (!started) {
             start = transform.position;
             miniStart = miniature.transform.position;
-            scaleFactor = transform.localScale.x / miniature.transform.localScale.x;
+            scaleFactor = factorCorrection * transform.localScale.x / miniature.transform.localScale.x;
             started = true;
         } else {
             Vector3 current = miniature.transform.position;
