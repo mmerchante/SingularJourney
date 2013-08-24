@@ -22,6 +22,8 @@ public class EntangledObject : MonoBehaviour {
             scaleFactor = factorCorrection * transform.localScale.x / miniature.transform.localScale.x;
             started = true;
         } else {
+            scaleFactor = factorCorrection * transform.localScale.x / miniature.transform.localScale.x;
+
             Vector3 current = miniature.transform.position;
             Vector3 delta = current - miniStart;
             transform.position = start + delta * scaleFactor;
