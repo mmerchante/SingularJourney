@@ -38,9 +38,9 @@ public class PuzzleController : MonoBehaviour {
     /**
      * Called when a puzzle is solved, by a puzzle solving event publisher
      **/
-    internal void OnPuzzleSolved(string name) {
+    internal void OnPuzzleSolved() {
         foreach (PuzzleListener listener in listeners) {
-            listener.OnPuzzleSolved(name);
+            listener.OnPuzzleSolved();
         }
         currentPuzzle += 1;
         LoadNextPuzzle();

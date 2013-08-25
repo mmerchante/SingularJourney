@@ -3,6 +3,6 @@ using System.Collections;
 
 public interface PuzzleListener {
 
-    void OnPuzzleSolved(string name);
+    void OnPuzzleSolved();
 
 }

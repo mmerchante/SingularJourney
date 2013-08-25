@@ -20,6 +20,11 @@ public class Respawner : MonoBehaviour {
             fading = false;
             player.transform.position = waypoint.transform.position;
             player.transform.rotation = waypoint.transform.rotation;
+
+            foreach (RespawnResetter resetter in FindObjectsOfType(typeof(RespawnResetter))) {
+                resetter.OnRespawn();
+            }
+
             menu.Fade(false);
         }
     }
