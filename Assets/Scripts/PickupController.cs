@@ -35,5 +35,9 @@ public class PickupController : MonoBehaviour {
     }
 
 
+    public GameObject GetHeldObject() {
+        return heldObject;
+    }
+
 
 }

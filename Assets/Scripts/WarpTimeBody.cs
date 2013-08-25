@@ -5,7 +5,7 @@ using System.Collections;
 public class WarpTimeBody : MonoBehaviour {
 
     private GameObject center;
-    private float startHeight = 10;
+    public float startHeight = 10;
     private float endHeight = 0;
     private float maxDrag = 20;
     private Vector3 specificAutoTorque;
@@ -21,7 +21,7 @@ public class WarpTimeBody : MonoBehaviour {
     void Update() {
         float distance = Vector3.Distance(transform.position, center.transform.position);
         float factor = 1 - Mathf.Exp(-Mathf.Abs(Mathf.Pow(distance, 3.5f) / 500));
-        rigidbody.drag = 1/factor;
+        rigidbody.drag = 1 / factor;
         if (rigidbody.drag > maxDrag) {
             rigidbody.drag = maxDrag;
         }
@@ -33,10 +33,19 @@ public class WarpTimeBody : MonoBehaviour {
 
     }
 
-    void OnCollisionEnter(Collision collision) {
-        if (collision.other.tag == "Floor") {
-            Respawn();
+    void OnTriggerEnter(Collider otherCollider) {
+        GameObject other = otherCollider.gameObject;
+        while (other.transform.parent != null) {
+            if (other.tag == "Floor") {
+                Respawn();
+                return;
+            }
+            other = other.transform.parent.gameObject;
         }
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        OnTriggerEnter(collision.collider);
     }
 
     void Respawn() {
