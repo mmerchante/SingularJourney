@@ -21,20 +21,6 @@ public class OVRMainMenu : MonoBehaviour {
     public float FadeInTime = 2.0f;
     public Texture FadeInTexture = null;
 
-    public Font FontReplace = null;
-
-    // Scenes to show onscreen
-    public string[] SceneNames;
-    public string[] Scenes;
-
-    private bool ScenesVisible = false;
-
-    // Spacing for scenes menu
-    private int StartX = 490;
-    private int StartY = 300;
-    private int WidthX = 300;
-    private int WidthY = 23;
-
     // Spacing for variables that users can change
     private int VRVarsSX = 553;
     private int VRVarsSY = 350;
@@ -163,8 +149,6 @@ public class OVRMainMenu : MonoBehaviour {
         strFPS = "FPS: 0";
         LoadingLevel = false;
 
-        ScenesVisible = false;
-
         // Ensure that camera controller variables have been properly
         // initialized before we start reading them
         if (CameraController != null) {
@@ -247,7 +231,6 @@ public class OVRMainMenu : MonoBehaviour {
         }
 
         // MainMenu updates
-        UpdateFunctions += UpdateSelectCurrentLevel;
         UpdateFunctions += UpdateHandleSnapshots;
 
         // Device updates
@@ -261,7 +244,6 @@ public class OVRMainMenu : MonoBehaviour {
 
         // Crosshair functionality
         Crosshair.Init();
-        Debug.Log("CROSS");
         Crosshair.SetCrosshairTexture(ref CrosshairImage);
         Crosshair.SetOVRCameraController(ref CameraController);
         Crosshair.SetOVRPlayerController(ref PlayerController);
@@ -270,8 +252,6 @@ public class OVRMainMenu : MonoBehaviour {
         // Check for HMD and sensor
         CheckIfRiftPresent();
 
-        // Init static members
-        ScenesVisible = false;
     }
 
     // Update
@@ -469,74 +449,7 @@ public class OVRMainMenu : MonoBehaviour {
     // UpdatePlayerControllerMovement
     void UpdatePlayerControllerMovement() {
         if (PlayerController != null)
-            PlayerController.SetHaltUpdateMovement(ScenesVisible);
-    }
-
-    // UpdateSelectCurrentLevel
-    void UpdateSelectCurrentLevel() {
-        ShowLevels();
-
-        if (ScenesVisible == false)
-            return;
-
-        CurrentLevel = GetCurrentLevel();
-
-        if ((Scenes.Length != 0) &&
-           ((OVRGamepadController.GPC_GetButton((int) OVRGamepadController.Button.A) == true) ||
-             Input.GetKeyDown(KeyCode.Return))) {
-            LoadingLevel = true;
-            Application.LoadLevelAsync(Scenes[CurrentLevel]);
-        }
-    }
-
-    // ShowLevels
-    bool ShowLevels() {
-        if (Scenes.Length == 0) {
-            ScenesVisible = false;
-            return ScenesVisible;
-        }
-
-        bool curStartDown = false;
-        if (OVRGamepadController.GPC_GetButton((int) OVRGamepadController.Button.Start) == true)
-            curStartDown = true;
-
-        if ((PrevStartDown == false) && (curStartDown == true) ||
-            Input.GetKeyDown(KeyCode.RightShift)) {
-            if (ScenesVisible == true)
-                ScenesVisible = false;
-            else
-                ScenesVisible = true;
-        }
-
-        PrevStartDown = curStartDown;
-
-        return ScenesVisible;
-    }
-
-    // GetCurrentLevel
-    int GetCurrentLevel() {
-        bool curHatDown = false;
-        if (OVRGamepadController.GPC_GetButton((int) OVRGamepadController.Button.Down) == true)
-            curHatDown = true;
-
-        bool curHatUp = false;
-        if (OVRGamepadController.GPC_GetButton((int) OVRGamepadController.Button.Down) == true)
-            curHatUp = true;
-
-        if ((PrevHatDown == false) && (curHatDown == true) ||
-            Input.GetKeyDown(KeyCode.DownArrow)) {
-            CurrentLevel = (CurrentLevel + 1) % SceneNames.Length;
-        } else if ((PrevHatUp == false) && (curHatUp == true) ||
-              Input.GetKeyDown(KeyCode.UpArrow)) {
-            CurrentLevel--;
-            if (CurrentLevel < 0)
-                CurrentLevel = SceneNames.Length - 1;
-        }
-
-        PrevHatDown = curHatDown;
-        PrevHatUp = curHatUp;
-
-        return CurrentLevel;
+            PlayerController.SetHaltUpdateMovement(false);
     }
 
     // GUI
@@ -564,7 +477,7 @@ public class OVRMainMenu : MonoBehaviour {
 
         // We can turn on the render object so we can render the on-screen menu
         if (GUIRenderObject != null) {
-            if (ScenesVisible || ShowVRVars || Crosshair.IsCrosshairVisible() ||
+            if (ShowVRVars || Crosshair.IsCrosshairVisible() ||
                 RiftPresentTimeout > 0.0f || DeviceDetectionTimeout > 0.0f ||
                 ((MagCal.Disabled() == false) && (MagCal.Ready() == false))
                 )
@@ -595,14 +508,9 @@ public class OVRMainMenu : MonoBehaviour {
             GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
         }
 
-        // Update OVRGUI functions (will be deprecated eventually when 2D renderingc
-        // is removed from GUI)
-        GuiHelper.SetFontReplace(FontReplace);
-
         // If true, we are displaying information about the Rift not being detected
         // So do not show anything else
         if (GUIShowRiftDetected() != true) {
-            GUIShowLevels();
             GUIShowVRVariables();
         }
 
@@ -617,34 +525,6 @@ public class OVRMainMenu : MonoBehaviour {
         GUI.matrix = svMat;
     }
 
-    // GUIShowLevels
-    void GUIShowLevels() {
-        if (ScenesVisible == true) {
-            // Darken the background by rendering fade texture 
-            GUI.color = new Color(0, 0, 0, 0.5f);
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), FadeInTexture);
-            GUI.color = Color.white;
-
-            if (LoadingLevel == true) {
-                string loading = "LOADING...";
-                GuiHelper.StereoBox(StartX, StartY, WidthX, WidthY, ref loading, Color.yellow);
-                return;
-            }
-
-            for (int i = 0; i < SceneNames.Length; i++) {
-                Color c;
-                if (i == CurrentLevel)
-                    c = Color.yellow;
-                else
-                    c = Color.black;
-
-                int y = StartY + (i * StepY);
-
-                GuiHelper.StereoBox(StartX, y, WidthX, WidthY, ref SceneNames[i], c);
-            }
-        }
-    }
-
     // GUIShowVRVariables
     void GUIShowVRVariables() {
         bool SpaceHit = Input.GetKey("space");
@@ -654,6 +534,8 @@ public class OVRMainMenu : MonoBehaviour {
             else
                 ShowVRVars = true;
         }
+
+        ShowVRVars = false; 
 
         OldSpaceHit = SpaceHit;
 
@@ -865,14 +747,8 @@ public class OVRMainMenu : MonoBehaviour {
     // GUIShowRiftDetected
     bool GUIShowRiftDetected() {
         if (RiftPresentTimeout > 0.0f) {
-            GuiHelper.StereoBox(StartX, StartY, WidthX, WidthY,
-                                 ref strRiftPresent, Color.white);
-
             return true;
         } else if (DeviceDetectionTimeout > 0.0f) {
-            GuiHelper.StereoBox(StartX, StartY, WidthX, WidthY,
-                                 ref strDeviceDetection, Color.white);
-
             return true;
         }
 
@@ -931,8 +807,7 @@ public class OVRMainMenu : MonoBehaviour {
 
     // UpdateResetOrientation
     void UpdateResetOrientation() {
-        if (((ScenesVisible == false) &&
-             (OVRGamepadController.GPC_GetButton((int) OVRGamepadController.Button.Down) == true)) ||
+        if (((OVRGamepadController.GPC_GetButton((int) OVRGamepadController.Button.Down) == true)) ||
             (Input.GetKeyDown(KeyCode.B) == true)) {
             OVRDevice.ResetOrientation(0);
         }
