@@ -108,6 +108,9 @@ public class OVRMainMenu : MonoBehaviour {
     private updateFunctions UpdateFunctions;
 
 
+    // fade out support
+    private bool fadeOut = false;
+
 
     // * * * * * * * * * * * * *
 
@@ -456,17 +459,36 @@ public class OVRMainMenu : MonoBehaviour {
 
     // * * * * * * * * * * * * * * * * *
     // OnGUI
+
+    public float GetAlpha() {
+        return AlphaFadeValue;
+    }
+
+    public void SetFadeTime(float time) {
+        FadeInTime = time;
+    }
+
+    public void Fade(bool isOut) {
+        fadeOut = isOut;
+    }
+
     void OnGUI() {
         // Important to keep from skipping render events
         if (Event.current.type != EventType.Repaint)
             return;
 
         // Fade in screen
-        if (AlphaFadeValue > 0.0f) {
-            AlphaFadeValue -= Mathf.Clamp01(Time.deltaTime / FadeInTime);
-            if (AlphaFadeValue < 0.0f) {
-                AlphaFadeValue = 0.0f;
+
+        float targetAlpha = fadeOut ? 1f : 0f;
+
+        if ((!fadeOut)?(AlphaFadeValue > 0f):(AlphaFadeValue < 1f)) {
+            AlphaFadeValue -= (fadeOut?-1:1)*Mathf.Clamp01(Time.deltaTime / FadeInTime);
+            if (AlphaFadeValue < 0f) {
+                AlphaFadeValue = 0f;
             } else {
+                if (AlphaFadeValue > 1f) {
+                    AlphaFadeValue = 1f;
+                }
                 GUI.color = new Color(0, 0, 0, AlphaFadeValue);
                 GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), FadeInTexture);
                 return;
