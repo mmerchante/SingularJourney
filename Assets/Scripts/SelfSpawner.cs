@@ -44,11 +44,13 @@ public class SelfSpawner : MonoBehaviour {
         SelfSpawner copy = (GameObject.Instantiate(prefab) as GameObject).GetComponent<SelfSpawner>();
         copy.gameObject.AddComponent<Marker>(); // prevent it from moving on level change
         copy.original = false;
-        Vector3 r = Random.onUnitSphere*0.01f;
+        Vector3 r = Random.onUnitSphere*0.00f;
         r.y = 0;
         copy.transform.position = transform.position + r;
         copy.transform.rotation = transform.rotation;
         copy.transform.localScale = transform.localScale;
+        copy.rigidbody.AddTorque(Random.onUnitSphere * 0.1f);
+        copy.renderer.material = renderer.material;
         if (clones.Count >= maxClones) {
             SelfSpawner old = clones.Dequeue();
             old.PlanFade();
