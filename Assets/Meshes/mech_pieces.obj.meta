@@ -1,0 +1,125 @@
+fileFormatVersion: 2
+guid: f481ccfdb154b654f921e0ba3bc79a12
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: mech_pieces_cylinder1
+    100004: mech_pieces_cylinder_big
+    100006: mech_pieces_cylinder_small
+    100008: mech_pieces_detail_gear
+    100010: mech_pieces_gear1
+    100012: mech_pieces_gear2
+    100014: mech_pieces_gear3
+    100016: mech_pieces_pin_1
+    100018: mech_pieces_piston_top
+    100020: mech_pieces_screw_small1
+    100022: mech_pieces_zip_higher
+    100024: mech_pieces_zip_lower
+    100026: screw_big_mech_pieces
+    400000: //RootNode
+    400002: mech_pieces_cylinder1
+    400004: mech_pieces_cylinder_big
+    400006: mech_pieces_cylinder_small
+    400008: mech_pieces_detail_gear
+    400010: mech_pieces_gear1
+    400012: mech_pieces_gear2
+    400014: mech_pieces_gear3
+    400016: mech_pieces_pin_1
+    400018: mech_pieces_piston_top
+    400020: mech_pieces_screw_small1
+    400022: mech_pieces_zip_higher
+    400024: mech_pieces_zip_lower
+    400026: screw_big_mech_pieces
+    2300000: mech_pieces_cylinder1
+    2300002: mech_pieces_cylinder_big
+    2300004: mech_pieces_cylinder_small
+    2300006: mech_pieces_detail_gear
+    2300008: mech_pieces_gear1
+    2300010: mech_pieces_gear2
+    2300012: mech_pieces_gear3
+    2300014: mech_pieces_pin_1
+    2300016: mech_pieces_piston_top
+    2300018: mech_pieces_screw_small1
+    2300020: mech_pieces_zip_higher
+    2300022: mech_pieces_zip_lower
+    2300024: screw_big_mech_pieces
+    3300000: mech_pieces_cylinder1
+    3300002: mech_pieces_cylinder_big
+    3300004: mech_pieces_cylinder_small
+    3300006: mech_pieces_detail_gear
+    3300008: mech_pieces_gear1
+    3300010: mech_pieces_gear2
+    3300012: mech_pieces_gear3
+    3300014: mech_pieces_pin_1
+    3300016: mech_pieces_piston_top
+    3300018: mech_pieces_screw_small1
+    3300020: mech_pieces_zip_higher
+    3300022: mech_pieces_zip_lower
+    3300024: screw_big_mech_pieces
+    4300000: mech_pieces_cylinder1
+    4300002: mech_pieces_cylinder_big
+    4300004: mech_pieces_cylinder_small
+    4300006: mech_pieces_detail_gear
+    4300008: mech_pieces_gear1
+    4300010: mech_pieces_gear2
+    4300012: mech_pieces_gear3
+    4300014: mech_pieces_pin_1
+    4300016: mech_pieces_piston_top
+    4300018: mech_pieces_screw_small1
+    4300020: mech_pieces_zip_higher
+    4300022: mech_pieces_zip_lower
+    4300024: screw_big_mech_pieces
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 

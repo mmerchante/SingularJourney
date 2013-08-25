@@ -10,13 +10,17 @@ public class RotateAlongAxis : MonoBehaviour {
 
     private float offset = 0f;
 
+    private Quaternion originalRot;
+
     void Start()
     {
+        originalRot = this.transform.localRotation;
+
         if (randomOffset)
             offset = Random.value * 2f * Mathf.PI;
     }
 
 	void Update () {
-        this.transform.localRotation = Quaternion.Euler(axis * speed * (Time.time + offset));
+        this.transform.localRotation = originalRot * Quaternion.Euler(axis * speed * (Time.time + offset));
 	}
 }
