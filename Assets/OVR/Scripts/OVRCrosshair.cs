@@ -189,7 +189,7 @@ public class OVRCrosshair
     #region Private Functions
     // ShouldDisplayCrosshair
     bool ShouldDisplayCrosshair()
-    {	
+    {
         /*if(Input.GetKeyDown (KeyCode.C))
         {
             if(DisplayCrosshair == false)
@@ -202,11 +202,10 @@ public class OVRCrosshair
             }
             else
                 DisplayCrosshair = false;
-        }
-                    
-        return DisplayCrosshair;*/
-        DisplayCrosshair = true;
-        return true;
+        }*/
+
+        DisplayCrosshair = false;
+        return DisplayCrosshair;
     }
     
     // CollisionWithGeometry
