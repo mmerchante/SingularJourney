@@ -8,10 +8,13 @@ public class WarpTimeBody : MonoBehaviour {
     private float startHeight = 10;
     private float endHeight = 0;
     private float maxDrag = 20;
+    private Vector3 specificAutoTorque;
 
     void Start() {
         center = GameObject.FindGameObjectWithTag("TimeWarp");
         transform.rotation = Random.rotation;
+
+        specificAutoTorque = Random.onUnitSphere * 1f;
 
     }
 
@@ -22,7 +25,11 @@ public class WarpTimeBody : MonoBehaviour {
         if (rigidbody.drag > maxDrag) {
             rigidbody.drag = maxDrag;
         }
-        rigidbody.angularDrag = 0.05f / factor;
+
+
+        rigidbody.AddTorque(specificAutoTorque);
+
+        rigidbody.angularDrag = 1f / factor;
 
     }
 
