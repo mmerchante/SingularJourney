@@ -8,13 +8,13 @@ Shader "vrjam/Selectable" {
 	
 	SubShader 
 	{
-		Tags { "RenderType" = "Overlay" }
+		Tags { "RenderType" = "Transparent" }
 	
 		Pass 
 		{
 			Blend One One
-			Cull Back Lighting Off Fog { Mode Off }
-			ZWrite Off
+			Cull Front Lighting Off Fog { Mode Off }
+	//		ZWrite Off
 		
 			CGPROGRAM
 			#pragma vertex vert
@@ -34,8 +34,7 @@ Shader "vrjam/Selectable" {
 				half t = _Velocity * _Time.a * 4.0;
 
 				half3 displ = half3(cos(v.vertex.y * 15.0 + t), sin(v.vertex.x * 15.0 + t) * .2, cos(v.vertex.z * 15.0 + t));
-
-				displ += v.vertex * 2.0;
+				displ += v.vertex.rgb * 2.0;
 				v.vertex += half4(displ, 0.0) * _Displacement * .05;
 
 

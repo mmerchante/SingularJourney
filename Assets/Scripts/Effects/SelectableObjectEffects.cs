@@ -16,12 +16,16 @@ public class SelectableObjectEffects : MonoBehaviour {
     
     void Start () 
     {
-        Shader selectionShader = Shader.Find("vrjam/Selectable");
+        Shader selectionShader = Shader.Find("vrjam/BRDF (Selectable)");
 
         Material selectionMaterial = new Material(selectionShader);
         selectionMaterial.SetColor("_Color", SELECTION_COLOR);
+        
 
         Material originalMaterial = this.renderer.material; // duplicate material too
+
+        if(originalMaterial.HasProperty("_BRDFTex"))
+            selectionMaterial.SetTexture("_BRDFTex", originalMaterial.GetTexture("_BRDFTex"));
 
         this.objectMaterials[0] = selectionMaterial;
         this.objectMaterials[1] = originalMaterial;
@@ -31,7 +35,7 @@ public class SelectableObjectEffects : MonoBehaviour {
 	
 	void Update () 
     {
-        hoverIntensity = Mathf.SmoothDamp(hoverIntensity, hover ? 1f : 0f, ref hoverVelocity, .25f);
+        hoverIntensity = Mathf.SmoothDamp(hoverIntensity, hover ? 1.5f : .25f, ref hoverVelocity, .25f);
 
         Material selMat = objectMaterials[0];
         selMat.SetFloat("_Displacement", hoverIntensity * .5f);
