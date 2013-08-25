@@ -30,6 +30,7 @@ public class Respawner : MonoBehaviour {
             player = other;
             menu.SetFadeTime(2);
             menu.Fade(true);
+            Debug.Log(name);
             fading = true;
         }
     }
