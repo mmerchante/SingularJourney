@@ -249,6 +249,8 @@ public class OVRMainMenu : MonoBehaviour {
         Crosshair.Init();
         Crosshair.SetCrosshairTexture(ref CrosshairImage);
         Crosshair.SetOVRCameraController(ref CameraController);
+        PickupController pickup = (FindObjectOfType(typeof(PickupController)) as PickupController);
+        pickup.SetOVRCameraController(ref CameraController);
         Crosshair.SetOVRPlayerController(ref PlayerController);
         UpdateFunctions += Crosshair.UpdateCrosshair;
 
