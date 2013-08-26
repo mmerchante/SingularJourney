@@ -61,7 +61,6 @@ public class PickupController : MonoBehaviour {
                     itemHeld = true;
                     attractor = heldObject.AddComponent<DampedOscillator>();
                 } else {
-                    Debug.Log(hoveringOverThis.tag);
                 }
                 if (selectable != null) {
                     selectable.OnSelect();
