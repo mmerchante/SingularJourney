@@ -30,14 +30,18 @@ public class PickupController : MonoBehaviour {
     void Update() {
         RaycastHit hit;
         SelectableObjectEffects selectable = null;
+        GameObject hoveringOverThis = null;
+
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f, layerMask)) {
-            if (hit.collider.gameObject) {
+            hoveringOverThis = hit.collider.gameObject;
+            if (hoveringOverThis) {
                 crosshair.transform.position = hit.point;
                 crosshair.transform.LookAt(MainCam.transform.position);
 
-                selectable = hit.collider.gameObject.GetComponent<SelectableObjectEffects>();
+                selectable = hoveringOverThis.GetComponent<SelectableObjectEffects>();
                 if (selectable != null && selectable != lastHovered) {
                     selectable.OnHover();
+                    lastHovered = selectable;
                 }
             }
         } else {
@@ -47,15 +51,18 @@ public class PickupController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0)) {
             if (!itemHeld) {
-                if (selectable != null) {
+                if (hoveringOverThis != null && hoveringOverThis.tag == "Pickable") {
                     itemHeld = true;
+                    attractor = heldObject.AddComponent<DampedOscillator>();
+                }
+                if (selectable != null) {
                     heldObject = selectable.gameObject;
                     selectable.OnSelect();
-                    attractor = heldObject.AddComponent<DampedOscillator>();
                 }
             } else {
                 Destroy(attractor);
-                heldObject.GetComponent<SelectableObjectEffects>().OnUnselect();
+                SelectableObjectEffects oldSelected = heldObject.GetComponent<SelectableObjectEffects>();
+                oldSelected.OnUnselect();
                 heldObject = null;
                 attractor = null;
                 itemHeld = false;

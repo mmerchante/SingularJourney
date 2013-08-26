@@ -63,7 +63,7 @@ public class OVRPlayerController : OVRComponent
 	
 	// We can adjust these to influence speed and rotation of player controller
 	private float MoveScaleMultiplier     = 1.0f; 
-	private float RotationScaleMultiplier = 1.0f; 
+	private float RotationScaleMultiplier = 0.25f; 
 	private bool  AllowMouseRotation      = true;
 	private bool  HaltUpdateMovement      = false;
 	
@@ -203,8 +203,8 @@ public class OVRPlayerController : OVRComponent
 		// Keyboard input
 			
 
-        if(Input.GetKeyDown(KeyCode.LeftControl))
-            Jump();
+        //if(Input.GetKeyDown(KeyCode.LeftControl))
+        //    Jump();
 
 		// Move
 			
