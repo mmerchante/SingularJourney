@@ -11,6 +11,9 @@ public class MusicQueue : MonoBehaviour {
 
     void Start () {
 
+        DontDestroyOnLoad(gameObject);
+
+
         clips = new Queue<AudioClip>(src);
 
         current = clips.Dequeue();
