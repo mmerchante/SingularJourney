@@ -26,8 +26,6 @@ public class IndianaJonesBridge : MonoBehaviour {
 
             Vector3 dirToMainLocator = Vector3.Scale(new Vector3(1f, 0f, 1f), locator1.position - target.position);
 
-            Debug.Log(dirToMainLocator.magnitude);
-
             if (Vector3.Dot(dirToMainLocator.normalized, mainDir) < 0f)
             {
                 float magnitude = dirToMainLocator.magnitude;
