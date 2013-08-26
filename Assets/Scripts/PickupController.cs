@@ -34,8 +34,13 @@ public class PickupController : MonoBehaviour {
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f, layerMask)) {
             hoveringOverThis = hit.collider.gameObject;
+
+
             if (hoveringOverThis != null) {
+                float dist = Vector3.Distance(hit.point, MainCam.transform.position);
                 crosshair.transform.position = hit.point;
+                float scale = (1f + dist*Mathf.Sqrt(2))*0.05f;
+                crosshair.transform.localScale = new Vector3(scale, scale, scale);
                 crosshair.transform.LookAt(MainCam.transform.position);
 
                 selectable = hoveringOverThis.GetComponent<SelectableObjectEffects>();
@@ -56,7 +61,6 @@ public class PickupController : MonoBehaviour {
                     itemHeld = true;
                     attractor = heldObject.AddComponent<DampedOscillator>();
                 } else {
-          
                 }
                 if (selectable != null) {
                     selectable.OnSelect();
