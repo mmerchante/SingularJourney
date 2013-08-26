@@ -833,10 +833,6 @@ public class OVRMainMenu : MonoBehaviour {
 
     // UpdateResetOrientation
     void UpdateResetOrientation() {
-        if (((OVRGamepadController.GPC_GetButton((int) OVRGamepadController.Button.Down) == true)) ||
-            (Input.GetKeyDown(KeyCode.B) == true)) {
-            OVRDevice.ResetOrientation(0);
-        }
     }
 
 }

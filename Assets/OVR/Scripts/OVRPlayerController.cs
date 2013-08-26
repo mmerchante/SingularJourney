@@ -63,7 +63,7 @@ public class OVRPlayerController : OVRComponent
     
     // We can adjust these to influence speed and rotation of player controller
     private float MoveScaleMultiplier     = 1.0f; 
-    private float RotationScaleMultiplier = 0.25f; 
+    private float RotationScaleMultiplier = 1.0f; 
     private bool  AllowMouseRotation      = true;
     private bool  HaltUpdateMovement      = false;
     
@@ -267,7 +267,7 @@ public class OVRPlayerController : OVRComponent
         // Rotate
         float deltaRotation = 0.0f;
         if(AllowMouseRotation == false)
-            deltaRotation = Input.GetAxis("Mouse X") * rotateInfluence * 3.25f;
+            deltaRotation = Input.GetAxis("Mouse X") * rotateInfluence * 1.0f;
             
         float filteredDeltaRotation = (sDeltaRotationOld * 0.0f) + (deltaRotation * 1.0f);
         YRotation += filteredDeltaRotation;
