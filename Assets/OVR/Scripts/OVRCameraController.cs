@@ -84,7 +84,7 @@ public class OVRCameraController : OVRComponent
 	public Color 		BackgroundColor = new Color(0.192f, 0.302f, 0.475f, 1.0f);
 	// Set the near and far clip plane for both cameras
 	public float 		NearClipPlane   = 0.15f;
-	public float 		FarClipPlane    = 1000.0f;
+	public float 		FarClipPlane    = 300f;
 	
 	// * * * * * * * * * * * * *
 		
