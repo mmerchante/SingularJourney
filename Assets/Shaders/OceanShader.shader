@@ -26,10 +26,9 @@ Shader "vrjam/Ocean (Fog)" {
 	    {
 	    	data.height = v.vertex.y;
 
-	    	float t = _Time.a * .2;
+	    	float t = _Time.a * .5;
 
 	    	float displ;
-	    	//displ = pow((cos(v.vertex.x * .5 + t) + sin(v.vertex.z * .5 + t)) * _Scale, 2.0);	    	
 
 	    	displ = sin(length(_Target - v.vertex) - t) * _Scale;
 
@@ -44,7 +43,7 @@ Shader "vrjam/Ocean (Fog)" {
 		inline half4 LightingPseudoBRDF (SurfaceOutput s, float3 lightDir, float3 viewDir, half atten)
 		{
 			half4 c = dot (s.Normal, lightDir) * .5 + .5;			
-			return lerp(unity_FogColor, c * s.Albedo.x, s.Specular) * atten * _LightColor0;
+			return lerp(c, c * s.Albedo.x, s.Specular) * atten * _LightColor0;
 		}
 
 
