@@ -4,7 +4,9 @@ using System.Collections;
 public class PickupController : MonoBehaviour {
 
 
-    public GameObject crosshair;
+    public GameObject crosshairPrefab;
+
+    private GameObject crosshair;
 
     private bool itemHeld = false;
     private GameObject heldObject;
@@ -16,6 +18,10 @@ public class PickupController : MonoBehaviour {
 
     private int layerMask = ~(1 << 9);
 
+
+    void Start() {
+        crosshair = Instantiate(crosshairPrefab) as GameObject;
+    }
 
     public void SetOVRCameraController(ref OVRCameraController cameraController) {
         cameraController.GetCamera(ref MainCam);
@@ -33,24 +39,27 @@ public class PickupController : MonoBehaviour {
                 if (selectable != null && selectable != lastHovered) {
                     selectable.OnHover();
                 }
-                if (Input.GetMouseButtonDown(0) && selectable != null) {
-                    if (!itemHeld) {
-                        itemHeld = true;
-                        heldObject = selectable.gameObject;
-                        selectable.OnSelect();
-                        attractor = heldObject.AddComponent<DampedOscillator>();
-                    } else {
-                        Destroy(attractor);
-                        heldObject.GetComponent<SelectableObjectEffects>().OnUnselect();
-                        heldObject = null;
-                        attractor = null;
-                        itemHeld = false;
-                    }
-                }
-
             }
         } else {
             crosshair.transform.position = Vector3.down * 1000f;
+        }
+
+
+        if (Input.GetMouseButtonDown(0)) {
+            if (!itemHeld) {
+                if (selectable != null) {
+                    itemHeld = true;
+                    heldObject = selectable.gameObject;
+                    selectable.OnSelect();
+                    attractor = heldObject.AddComponent<DampedOscillator>();
+                }
+            } else {
+                Destroy(attractor);
+                heldObject.GetComponent<SelectableObjectEffects>().OnUnselect();
+                heldObject = null;
+                attractor = null;
+                itemHeld = false;
+            }
         }
 
         if (selectable == null && lastHovered) {
