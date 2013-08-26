@@ -6,11 +6,11 @@ Shader "vrjam/Indiana Jones Stairs" {
 		_BumpTex ("Bump", 2D) = "bump" {}
 		_BRDFTex ("NdotL NdotH (RGBA)", 2D) = "white" {}
 		_Scale ("Pattern scale", Range (.01, 1.0)) = .25
-		_Mask ("Mask", Range (0.0, 1.0)) = .5
+		_Mask ("Mask", Range (0.0, 1.0)) = 0.0
 	}	
 
 	SubShader { 
-		Tags { "RenderType"="Transparent" }
+		Tags { "Queue"="Transparent" }
 
 		Blend SrcAlpha OneMinusSrcAlpha
 		
@@ -28,10 +28,9 @@ Shader "vrjam/Indiana Jones Stairs" {
 			half2 mask;
 		};
 
-
 	    void myvert (inout appdata_full v, out Input data) {
 	      UNITY_INITIALIZE_OUTPUT(Input,data);
-	      data.mask.x = v.vertex.x + 2.0;
+	      data.mask.x = v.vertex.x + 7.5;
 	      data.mask.y = v.vertex.z;
 	    }
 
@@ -68,7 +67,7 @@ Shader "vrjam/Indiana Jones Stairs" {
 
 			half4 tex = tex2D(_MainTex, IN.uv_MainTex) * length(noise);
 			o.Albedo = tex.rgb;
-			o.Alpha = step(_Mask + cos(IN.mask.y * 10.0 + _Time.a) * .05 + .05, IN.mask.x);
+			o.Alpha = step(_Mask * 14.0 + cos(IN.mask.y * 10.0 + _Time.a) * .05 + .05, IN.mask.x);
 			o.Normal = bump;
 		}
 		ENDCG
