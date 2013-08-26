@@ -301,7 +301,7 @@ public class OVRMainMenu : MonoBehaviour {
     }
 
     // UpdateIPD
-    void UpdateIPD() {
+    void UpdateIPD() {/*
         if (Input.GetKeyDown(KeyCode.Equals)) {
             float ipd = 0;
             CameraController.GetIPD(ref ipd);
@@ -312,7 +312,7 @@ public class OVRMainMenu : MonoBehaviour {
             CameraController.GetIPD(ref ipd);
             ipd -= IPDIncrement;
             CameraController.SetIPD(ipd);
-        }
+        }*/
 
         if (ShowVRVars == true)// limit gc
         {
@@ -325,22 +325,23 @@ public class OVRMainMenu : MonoBehaviour {
     // UpdatePrediction
     void UpdatePrediction() {
         // Turn prediction on/off
+        /*
         if (Input.GetKeyDown(KeyCode.P)) {
             if (CameraController.PredictionOn == false)
                 CameraController.PredictionOn = true;
             else
                 CameraController.PredictionOn = false;
-        }
+        }*/
 
         // Update prediction value (only if prediction is on)
         if (CameraController.PredictionOn == true) {
             float pt = OVRDevice.GetPredictionTime(0);
-            if (Input.GetKeyDown(KeyCode.Comma))
+            /*if (Input.GetKeyDown(KeyCode.Comma))
                 pt -= PredictionIncrement;
             else if (Input.GetKeyDown(KeyCode.Period))
                 pt += PredictionIncrement;
-
-            OVRDevice.SetPredictionTime(0, pt);
+            */
+            //OVRDevice.SetPredictionTime(0, pt);
 
             // re-get the prediction time to make sure it took
             pt = OVRDevice.GetPredictionTime(0) * 1000.0f;
@@ -353,7 +354,7 @@ public class OVRMainMenu : MonoBehaviour {
     }
 
     // UpdateFOV
-    void UpdateFOV() {
+    void UpdateFOV() {/*
         if (Input.GetKeyDown(KeyCode.LeftBracket)) {
             float cfov = 0;
             CameraController.GetVerticalFOV(ref cfov);
@@ -364,7 +365,7 @@ public class OVRMainMenu : MonoBehaviour {
             CameraController.GetVerticalFOV(ref cfov);
             cfov += FOVIncrement;
             CameraController.SetVerticalFOV(cfov);
-        }
+        }*/
 
         if (ShowVRVars == true)// limit gc
         {
@@ -384,7 +385,7 @@ public class OVRMainMenu : MonoBehaviour {
         // * * * * * * * * *
         // Get the distortion coefficients to apply to shader
         CameraController.GetDistortionCoefs(ref Dk0, ref Dk1, ref Dk2, ref Dk3);
-
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha1))
             Dk1 -= DistKIncrement;
         else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -394,7 +395,7 @@ public class OVRMainMenu : MonoBehaviour {
             Dk2 -= DistKIncrement;
         else if (Input.GetKeyDown(KeyCode.Alpha4))
             Dk2 += DistKIncrement;
-
+        */
         CameraController.SetDistortionCoefs(Dk0, Dk1, Dk2, Dk3);
 
         //if(ShowVRVars == true)// limit gc
@@ -406,6 +407,7 @@ public class OVRMainMenu : MonoBehaviour {
     void UpdateEyeHeightOffset() {
         // We will update neck position, since camera root and eye center should
         // be set differently.
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha5)) {
             Vector3 neckPosition = Vector3.zero;
             CameraController.GetNeckPosition(ref neckPosition);
@@ -416,7 +418,7 @@ public class OVRMainMenu : MonoBehaviour {
             CameraController.GetNeckPosition(ref neckPosition);
             neckPosition.y += HeightIncrement;
             CameraController.SetNeckPosition(neckPosition);
-        }
+        }*/
 
         if (ShowVRVars == true)// limit gc
         {
@@ -431,6 +433,7 @@ public class OVRMainMenu : MonoBehaviour {
     void UpdateSpeedAndRotationScaleMultiplier() {
         float moveScaleMultiplier = 0.0f;
         PlayerController.GetMoveScaleMultiplier(ref moveScaleMultiplier);
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha7))
             moveScaleMultiplier -= SpeedRotationIncrement;
         else if (Input.GetKeyDown(KeyCode.Alpha8))
@@ -444,11 +447,7 @@ public class OVRMainMenu : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.Alpha0))
             rotationScaleMultiplier += SpeedRotationIncrement;
         PlayerController.SetRotationScaleMultiplier(rotationScaleMultiplier);
-
-        if (ShowVRVars == true)// limit gc
-            strSpeedRotationMultipler = System.String.Format("Spd.X: {0:F2} Rot.X: {1:F2}",
-                                    moveScaleMultiplier,
-                                    rotationScaleMultiplier);
+        */
     }
 
     // UpdatePlayerControllerMovement
@@ -622,6 +621,8 @@ public class OVRMainMenu : MonoBehaviour {
     // UpdateHandleSnapshots
     void UpdateHandleSnapshots() {
         // Default shapshot
+
+        /*
         if (Input.GetKeyDown(KeyCode.F2))
             LoadSnapshot("DEFAULT");
 
@@ -648,6 +649,7 @@ public class OVRMainMenu : MonoBehaviour {
             else
                 LoadSnapshot("SNAPSHOT3");
         }
+         * */
 
     }
 
