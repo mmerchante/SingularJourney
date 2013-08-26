@@ -12,8 +12,6 @@ public class SelectableObjectEffects : MonoBehaviour {
 
     private Material[] objectMaterials = new Material[2];
 
-    private bool click = false;
-    
     void Start () 
     {
         Shader selectionShader = Shader.Find("vrjam/BRDF (Selectable)");
@@ -31,15 +29,15 @@ public class SelectableObjectEffects : MonoBehaviour {
         this.objectMaterials[1] = originalMaterial;
 
         this.renderer.materials = objectMaterials;
-	}
-	
-	void Update () 
+    }
+    
+    void Update () 
     {
         hoverIntensity = Mathf.SmoothDamp(hoverIntensity, hover ? 1.5f : .25f, ref hoverVelocity, .25f);
 
         Material selMat = objectMaterials[0];
         selMat.SetFloat("_Displacement", hoverIntensity * .5f);
-	}
+    }
 
     public void OnSelect()
     {
@@ -61,23 +59,4 @@ public class SelectableObjectEffects : MonoBehaviour {
         hover = false;
     }
 
-    public void OnMouseEnter()
-    {
-        OnHover();
-    }
-
-    public void OnMouseExit()
-    {
-        OnUnhover();
-    }
-
-    public void OnMouseDown()
-    {
-        click = !click;
-
-        if (click)
-            OnSelect();
-        else
-            OnUnselect();
-    }
 }

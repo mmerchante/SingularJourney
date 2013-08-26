@@ -34,7 +34,7 @@ public class PickupController : MonoBehaviour {
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f, layerMask)) {
             hoveringOverThis = hit.collider.gameObject;
-            if (hoveringOverThis) {
+            if (hoveringOverThis != null) {
                 crosshair.transform.position = hit.point;
                 crosshair.transform.LookAt(MainCam.transform.position);
 
@@ -51,25 +51,29 @@ public class PickupController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0)) {
             if (!itemHeld) {
-                if (hoveringOverThis != null && hoveringOverThis.tag == "Pickable") {
+                if (hoveringOverThis != null && (hoveringOverThis.tag == "Pickable" || hoveringOverThis.tag == "TimeWarp")) {
+                    heldObject = hoveringOverThis;
                     itemHeld = true;
                     attractor = heldObject.AddComponent<DampedOscillator>();
+                } else {
+                    Debug.Log(hoveringOverThis.tag);
                 }
                 if (selectable != null) {
-                    heldObject = selectable.gameObject;
                     selectable.OnSelect();
                 }
             } else {
                 Destroy(attractor);
                 SelectableObjectEffects oldSelected = heldObject.GetComponent<SelectableObjectEffects>();
-                oldSelected.OnUnselect();
+                if (oldSelected != null) {
+                    oldSelected.OnUnselect();
+                }
                 heldObject = null;
                 attractor = null;
                 itemHeld = false;
             }
         }
 
-        if (selectable == null && lastHovered) {
+        if (selectable == null && lastHovered != null) {
             lastHovered.OnUnhover();
             lastHovered = null;
         }
