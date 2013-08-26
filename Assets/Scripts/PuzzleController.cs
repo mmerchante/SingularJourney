@@ -17,32 +17,13 @@ public class PuzzleController : MonoBehaviour {
 
     /* instance members */
     public string[] puzzles;
+
     private int currentPuzzle;
-    private List<PuzzleListener> listeners;
     private AsyncOperation async;
 
     void Start() {
-        listeners = new List<PuzzleListener>();
         OnLevelLoaded(0);
         currentPuzzle = 1;
-        LoadNextPuzzle();
-    }
-
-    /**
-     * Register to be aware of puzzle solving events
-     **/
-    internal void AddListener(PuzzleListener listener) {
-        listeners.Add(listener);
-    }
-
-    /**
-     * Called when a puzzle is solved, by a puzzle solving event publisher
-     **/
-    internal void OnPuzzleSolved() {
-        foreach (PuzzleListener listener in listeners) {
-            listener.OnPuzzleSolved();
-        }
-        currentPuzzle += 1;
         LoadNextPuzzle();
     }
 
@@ -75,6 +56,14 @@ public class PuzzleController : MonoBehaviour {
             }
         }
         Debug.Log(n + " objects moved");
+
+
+        if (level + 1 < puzzles.Length)
+        {
+            currentPuzzle += 1;
+            LoadNextPuzzle();
+        }
+        
     }
 
 

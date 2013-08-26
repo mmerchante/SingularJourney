@@ -7,7 +7,7 @@ public class OceanObject : MonoBehaviour {
 
     public void Update()
     {
-        if (this.renderer && this.renderer.material)
+        if (this.renderer && this.renderer.material && target)
         {
             Vector3 p = transform.position;
 
