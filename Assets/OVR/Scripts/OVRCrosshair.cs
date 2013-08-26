@@ -216,11 +216,10 @@ public class OVRCrosshair
         Vector3 startPos = MainCam.transform.position;
         Vector3 dir = Vector3.forward;
         dir = MainCam.transform.rotation * dir;
-        dir *= CrosshairDistance;
-        Vector3 endPos = startPos + dir;
         
         RaycastHit hit;
-        if (Physics.Linecast(startPos, endPos, out hit)) 
+
+        if (Physics.Raycast(startPos, dir, out hit)) 
         {
             if (!hit.collider.isTrigger)
             {
