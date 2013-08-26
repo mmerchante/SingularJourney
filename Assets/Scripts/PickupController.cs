@@ -39,7 +39,7 @@ public class PickupController : MonoBehaviour {
             if (hoveringOverThis != null) {
                 float dist = Vector3.Distance(hit.point, MainCam.transform.position);
                 crosshair.transform.position = hit.point;
-                float scale = (1f + dist*Mathf.Sqrt(2))*0.05f;
+                float scale = (1f + dist*Mathf.Sqrt(2))*0.01f;
                 crosshair.transform.localScale = new Vector3(scale, scale, scale);
                 crosshair.transform.LookAt(MainCam.transform.position);
 
